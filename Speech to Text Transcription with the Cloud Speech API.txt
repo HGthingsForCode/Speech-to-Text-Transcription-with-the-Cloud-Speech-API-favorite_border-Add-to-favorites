@@ -1,0 +1,62 @@
+gcloud auth list
+Credentialed accounts:
+ - <myaccount>@<mydomain>.com (active)
+
+ gcloud config list project
+ [core]
+project = <project_ID>
+
+export API_KEY=<YOUR_API_KEY>
+
+touch request.json
+vim request.json   //Open the file using your preferred command line editor (nano, vim, emacs) or gcloud
+{
+  "config": {
+      "encoding":"FLAC",
+      "languageCode": "en-US"
+  },
+  "audio": {
+      "uri":"gs://cloud-samples-tests/speech/brooklyn.flac"
+  }
+}
+
+
+curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json \
+"https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}"
+
+{
+  "results": [
+    {
+      "alternatives": [
+        {
+          "transcript": "how old is the Brooklyn Bridge",
+          "confidence": 0.98267895
+        }
+      ]
+    }
+  ]
+}
+
+ {
+  "config": {
+      "encoding":"FLAC",
+      "languageCode": "fr"
+  },
+  "audio": {
+      "uri":"gs://speech-language-samples/fr-sample.flac"
+  }
+}
+
+
+{
+  "results": [
+    {
+      "alternatives": [
+        {
+          "transcript": "maître corbeau sur un arbre perché tenait en son bec un fromage",
+          "confidence": 0.9710122
+        }
+      ]
+    }
+  ]
+}
